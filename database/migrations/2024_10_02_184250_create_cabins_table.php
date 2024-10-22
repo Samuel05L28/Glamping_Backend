@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('capacity')->unsigned();
             $table->timestamps();
 
-            $table->foreign('cabinlevel_id')
+            $table->foreign('cabinlevels_id')
                 ->references('id')->on('cabin_levels')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
