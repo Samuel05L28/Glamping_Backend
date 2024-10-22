@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name', 40);
             //Nivel FK
-            $table->foreignId('cabinlevel_id');
+            $table->foreignId('cabinlevels_id');
             //Service FK
-            // $table->foreignId('service_id');
+            $table->foreignId('services_id');
             $table->integer('capacity')->unsigned();
             $table->timestamps();
 
@@ -26,10 +26,10 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             
-            // $table->foreign('service_id')
-            //     ->references('id')->on('service')
-            //     ->onUpdate('cascade')
-            //     ->onDelete('restrict');
+            $table->foreign('services_id')
+                ->references('id')->on('services')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
         });
     }
 
