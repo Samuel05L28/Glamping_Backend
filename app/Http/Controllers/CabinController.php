@@ -4,15 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Models\Cabin;
 use Illuminate\Http\Request;
+use App\Http\Requests\CabinStoreRequest;
 
 class CabinController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cabin = Cabin::orderBy('name', 'asc')->get();
+        $sort = $request->input('sort','name'); 
+        $type = $request->input('type','asc');
+
+        $validSort = ["name","cabinlevel_id","capacity"];
+
+        if(! in_array($sort,$validSort)){
+            $message = "Invalid sort field: $sort";
+            return response()->json(['error' => $message], 400);
+        }
+
+        $validType = ["asc","desc"];
+
+        if(! in_array($type,$validType)){
+            $message = "Invalid sort field: $type";
+            return response()->json(['error' => $message], 400);
+        }
+
+
+        $cabin = Cabin::orderBy($sort, $type)->get();
+
          return response()->json(['data' => $cabin], 200);
         // return "Hola mundo";
     }
@@ -20,9 +40,10 @@ class CabinController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CabinStoreRequest $request)
     {
         $cabin = Cabin::create($request->all());
+
         return response()->json(['data' => $cabin], 201);
     }
 
@@ -40,6 +61,7 @@ class CabinController extends Controller
     public function update(Request $request, Cabin $cabin)
     {
         $cabin->update($request->all());
+
          return response()->json(['data' => $cabin], 200);
     }
 
@@ -49,6 +71,7 @@ class CabinController extends Controller
     public function destroy(Cabin $cabin)
     {
         $cabin->delete();
+
          return response(null, 204);
     }
 }
