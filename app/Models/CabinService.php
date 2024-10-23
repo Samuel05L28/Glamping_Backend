@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CabinLevel extends Model
+class CabinService extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'description',
-        'color',
+        'cabins_id',
+        'service_id'
     ];
 }
