@@ -8,10 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class CabinLevel extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'name',
-        'description',
-        'color',
-    ];
 }
