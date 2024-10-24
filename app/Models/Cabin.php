@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Cabin extends Model
 {
@@ -19,4 +20,9 @@ class Cabin extends Model
         'services_id',
         'capacity',
     ];
+
+    public function cabinLevel(): BelongsTo
+    {
+        return $this->belongsTo(CabinLevel::class);
+    }
 }

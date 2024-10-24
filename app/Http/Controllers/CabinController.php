@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CabinCollection;
 use App\Http\Resources\CabinResource;
 use App\Models\Cabin;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ class CabinController extends Controller
 
         $cabin = Cabin::orderBy($sort, $type)->get();
 
-         return response()->json(['data' => CabinResource::collection($cabin)], 200);
+         return response()->json([new CabinCollection($cabin)], 200);
         // return "Hola mundo";
     }
 
