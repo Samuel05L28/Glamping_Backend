@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CabinResource;
 use App\Models\Cabin;
 use Illuminate\Http\Request;
 use App\Http\Requests\CabinStoreRequest;
@@ -16,7 +17,7 @@ class CabinController extends Controller
         $sort = $request->input('sort','name'); 
         $type = $request->input('type','asc');
 
-        $validSort = ["name","cabinlevel_id","capacity"];
+        $validSort = ["name","cabinlevels_id","capacity"];
 
         if(! in_array($sort,$validSort)){
             $message = "Invalid sort field: $sort";
@@ -33,7 +34,7 @@ class CabinController extends Controller
 
         $cabin = Cabin::orderBy($sort, $type)->get();
 
-         return response()->json(['data' => $cabin], 200);
+         return response()->json(['data' => CabinResource::collection($cabin)], 200);
         // return "Hola mundo";
     }
 
@@ -52,7 +53,7 @@ class CabinController extends Controller
      */
     public function show(Cabin $cabin)
     {
-        return response()->json(['data' => $cabin], 200);
+        return response()->json(['data' => new CabinResource($cabin)], 200);
     }
 
     /**

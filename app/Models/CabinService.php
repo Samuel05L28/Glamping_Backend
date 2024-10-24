@@ -11,6 +11,6 @@ class CabinService extends Model
 
     protected $fillable = [
         'cabins_id',
-        'service_id'
+        'services_id'
     ];
 }

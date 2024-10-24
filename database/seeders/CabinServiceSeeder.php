@@ -14,14 +14,14 @@ class CabinServiceSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('cabin_service')->insert([
-            'cabin_id' => 1,
-            'service_id' => 1,
+        DB::table('cabin_services')->insert([
+            'cabins_id' => 1,
+            'services_id' => 1,
         ]);
 
-        DB::table('cabin_service')->insert([
-            'cabin_id' => 1,
-            'service_id' => 2,
+        DB::table('cabin_services')->insert([
+            'cabins_id' => 1,
+            'services_id' => 2,
         ]);
     }
 }

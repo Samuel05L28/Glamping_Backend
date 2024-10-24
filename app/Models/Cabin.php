@@ -15,8 +15,8 @@ class Cabin extends Model
      */
     protected $fillable = [
         'name',
-        'cabinlevel_id',
-        'service_id',
+        'cabinlevels_id',
+        'services_id',
         'capacity',
     ];
 }
