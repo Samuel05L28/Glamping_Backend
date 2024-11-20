@@ -3,16 +3,32 @@
 namespace App\Http\Controllers;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use App\Http\Resources\ServiceCollection;
 
 class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $Service = Service::all();
-         return response()->json(['data' => $Service], 200);
+        $sort = $request->input('sort', 'name');
+        $type = $request->input('type', 'asc');
+
+        $validSort = ["name", "description"];
+        if (!in_array($sort, $validSort)) {
+            $message = "Invalid sort field: $sort";
+            return response()->json(['error' => $message], 400);
+        }
+
+        $validType = ["asc", "desc"];
+        if (!in_array($type, $validType)) {
+            $message = "Invalid sort type: $type";
+            return response()->json(['error' => $message], 400);
+        }
+
+        $services = Service::orderBy($sort, $type)->get();
+        return response()->json([new ServiceCollection($services)], 200);
     }
 
     /**
