@@ -13,4 +13,14 @@ class Reservation extends Model
         'cabins_id',
         'users_id',
     ];
+
+    public function cabins()
+    {
+        return $this->belongsTo(Cabin::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

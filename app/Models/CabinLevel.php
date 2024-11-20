@@ -16,9 +16,4 @@ class CabinLevel extends Model
         'color',
     ];
 
-
-    public function cabins(): HasMany
-    {
-        return $this->hasMany(Cabin::class);
-    }
 }

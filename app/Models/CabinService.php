@@ -13,4 +13,14 @@ class CabinService extends Model
         'cabins_id',
         'services_id'
     ];
+
+    public function cabins()
+    {
+        return $this->belongsTo(Cabin::class);
+    }
+
+    public function services()
+    {
+        return $this->belongsTo(Service::class);
+    }
 }
