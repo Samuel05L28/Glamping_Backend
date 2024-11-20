@@ -10,6 +10,21 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+    public function register(Request $request){
+        $request->validate([
+            'name' => 'required|string|min:5',
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:7',
+        ]);
+
+        $user = User::create($request->all());
+
+        return response()->json([
+            "status" => "success",
+            "message" => "Usuario registrado correctamente"
+        ]);
+    }
+
     public function login(Request $request)
     {
         // Validar que el usuari haya provisto los datos necesarios

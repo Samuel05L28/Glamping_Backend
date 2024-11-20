@@ -14,6 +14,15 @@ use App\Http\Controllers\api\v1\AuthController;
 Route::get('/hola/locos', [CabinController::class, 'index'])->name("hola.locos");
 
 Route::post(
+    '/v1/register',
+    [
+        App\Http\Controllers\api\v1\AuthController::class,
+        'register'
+    ]
+)->name('api.register');
+
+
+Route::post(
     '/v1/login',
     [
         App\Http\Controllers\api\v1\AuthController::class,
