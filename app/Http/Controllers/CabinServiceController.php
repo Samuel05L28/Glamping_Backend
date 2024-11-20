@@ -12,7 +12,7 @@ class CabinServiceController extends Controller
      */
     public function index(Request $request)
     {
-        $sort = $request->input('sort', 'name');
+        $sort = $request->input('sort', 'cabins_id');
         $type = $request->input('type', 'asc');
 
         $validSort = ["cabins_id", "services_id"];
