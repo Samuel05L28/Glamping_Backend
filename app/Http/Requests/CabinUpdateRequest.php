@@ -22,7 +22,9 @@ class CabinUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name" => "required|min:5|max:40|string",
+            "cabinlevels_id" => "required|integer|numeric|exists:cabin_levels,id",
+            "capacity" => "required|integer|numeric|min:1"
         ];
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Resources\CabinResource;
 use App\Models\Cabin;
 use Illuminate\Http\Request;
 use App\Http\Requests\CabinStoreRequest;
+use App\Http\Requests\CabinUpdateRequest;
 
 class CabinController extends Controller
 {
@@ -36,7 +37,6 @@ class CabinController extends Controller
         $cabin = Cabin::orderBy($sort, $type)->get();
 
          return response()->json([new CabinCollection($cabin)], 200);
-        // return "Hola mundo";
     }
 
     /**
@@ -44,7 +44,8 @@ class CabinController extends Controller
      */
     public function store(CabinStoreRequest $request)
     {
-        $cabin = Cabin::create($request->all());
+        $validated = $request->validate((new CabinStoreRequest)->rules());
+        $cabin = Cabin::create($validated);
 
         return response()->json(['data' => $cabin], 201);
     }
@@ -62,8 +63,9 @@ class CabinController extends Controller
      */
     public function update(Request $request, Cabin $cabin)
     {
-        $cabin->update($request->all());
-
+        
+        $validated = $request->validate((new CabinUpdateRequest)->rules());
+        $cabin->update($validated);
          return response()->json(['data' => $cabin], 200);
     }
 

@@ -23,7 +23,7 @@ class CabinStoreRequest extends FormRequest
     {
         return [
             "name" => "required|min:5|max:40|string|unique:cabins,name",
-            "cabinlevel_id" => "required|integer|numeric|exists:cabin_levels",
+            "cabinlevels_id" => "required|integer|numeric|exists:cabin_levels,id",
             "capacity" => "required|integer|numeric|min:1"
         ];
     }
