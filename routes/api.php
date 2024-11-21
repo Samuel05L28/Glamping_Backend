@@ -42,4 +42,5 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::apiResource('cabin-levels', CabinLevelController::class);
     Route::apiResource('services', ServiceController::class);
     Route::apiResource('reservations', ReservationController::class);
+    Route::get('reservationsCabins', [ReservationController::class, 'reservedCabins']);
 });

@@ -20,5 +20,26 @@ class CabinSeeder extends Seeder
             'services_id' => 1,
             'capacity' => 4
         ]);
+
+        DB::table('cabins')->insert([
+            'name' => 'Cabaña 2',
+            'cabinlevels_id' => 2,
+            'services_id' => 2,
+            'capacity' => 6
+        ]);
+
+        DB::table('cabins')->insert([
+            'name' => 'Cabaña 3',
+            'cabinlevels_id' => 1,
+            'services_id' => 2,
+            'capacity' => 8
+        ]);
+
+        DB::table('cabins')->insert([
+            'name' => 'Cabaña 4',
+            'cabinlevels_id' => 2,
+            'services_id' => 1,
+            'capacity' => 10
+        ]);
     }
 }

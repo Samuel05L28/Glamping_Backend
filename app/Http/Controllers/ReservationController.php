@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Resources\ReservationCollection;
+use App\Models\Cabin;
 use App\Http\Requests\ReservationStoreRequest;
 use App\Http\Requests\ReservationUpdateRequest;
 
@@ -69,5 +70,23 @@ class ReservationController extends Controller
         $Reservation->delete();
         return response(null, 204);
     }
+
+    public function reservedCabins()
+    {
+        $cabins = Cabin::with(['reservations.user'])->get();
+
+        $data = $cabins->map(function ($cabin) {
+            $reservation = $cabin->reservations->first();
+            return [
+                'Cabaña' => $cabin->name,
+                'Reservada' => $reservation ? true : false,
+                'Cliente' => $reservation ? $reservation->user->name : null,
+            ];
+        });
+
+        // Retorna los datos en formato JSON
+        return response()->json($data, 200);
+    }
+
 }
 

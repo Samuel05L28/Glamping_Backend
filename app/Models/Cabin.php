@@ -24,4 +24,10 @@ class Cabin extends Model
     {
         return $this->belongsTo(CabinLevel::class);
     }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'cabins_id');
+    }
+
 }
