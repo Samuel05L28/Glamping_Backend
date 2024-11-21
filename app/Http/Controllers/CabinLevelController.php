@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\CabinLevel;
 use Illuminate\Http\Request;
 use App\Http\Resources\CabinLevelCollection;
+use App\Http\Requests\CabinLevelStoreRequest;
+use App\Http\Requests\CabinLevelUpdateRequest;
 
 class CabinLevelController extends Controller
 {
@@ -37,7 +39,8 @@ class CabinLevelController extends Controller
      */
     public function store(Request $request)
     {
-        $cabinLevel = CabinLevel::create($request->all());
+        $validated = $request->validate((new CabinLevelStoreRequest)->rules());
+        $cabinLevel = CabinLevel::create($validated);
         return response()->json(['data' => $cabinLevel], 201);
     }
 
@@ -54,7 +57,8 @@ class CabinLevelController extends Controller
      */
     public function update(Request $request, CabinLevel $cabinLevel)
     {
-        $cabinLevel->update($request->all());
+        $validated = $request->validate((new CabinLevelUpdateRequest)->rules());
+        $cabinLevel->update($validated);
         return response()->json(['data' => $cabinLevel], 200);
     }
 

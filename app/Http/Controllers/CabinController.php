@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CabinCollection;
 use App\Http\Resources\CabinResource;
 use App\Models\Cabin;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Requests\CabinStoreRequest;
 use App\Http\Requests\CabinUpdateRequest;
@@ -16,19 +17,19 @@ class CabinController extends Controller
      */
     public function index(Request $request)
     {
-        $sort = $request->input('sort','name'); 
-        $type = $request->input('type','asc');
+        $sort = $request->input('sort', 'name');
+        $type = $request->input('type', 'asc');
 
-        $validSort = ["name","cabinlevels_id","capacity"];
+        $validSort = ["name", "cabinlevels_id", "capacity"];
 
-        if(! in_array($sort,$validSort)){
+        if (!in_array($sort, $validSort)) {
             $message = "Invalid sort field: $sort";
             return response()->json(['error' => $message], 400);
         }
 
-        $validType = ["asc","desc"];
+        $validType = ["asc", "desc"];
 
-        if(! in_array($type,$validType)){
+        if (!in_array($type, $validType)) {
             $message = "Invalid sort field: $type";
             return response()->json(['error' => $message], 400);
         }
@@ -36,7 +37,7 @@ class CabinController extends Controller
 
         $cabin = Cabin::orderBy($sort, $type)->get();
 
-         return response()->json([new CabinCollection($cabin)], 200);
+        return response()->json([new CabinCollection($cabin)], 200);
     }
 
     /**
@@ -63,10 +64,10 @@ class CabinController extends Controller
      */
     public function update(Request $request, Cabin $cabin)
     {
-        
+
         $validated = $request->validate((new CabinUpdateRequest)->rules());
         $cabin->update($validated);
-         return response()->json(['data' => $cabin], 200);
+        return response()->json(['data' => $cabin], 200);
     }
 
     /**
@@ -76,6 +77,7 @@ class CabinController extends Controller
     {
         $cabin->delete();
 
-         return response(null, 204);
+        return response(null, 204);
     }
+
 }

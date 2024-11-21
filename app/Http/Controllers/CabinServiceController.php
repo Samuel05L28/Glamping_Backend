@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\CabinService;
 use Illuminate\Http\Request;
 use App\Http\Resources\CabinServiceCollection;
+use App\Http\Requests\CabinServiceUpdateRequest;
+use App\Http\Requests\CabinServiceStoreRequest;
 
 class CabinServiceController extends Controller
 {
@@ -36,8 +38,9 @@ class CabinServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $CabinService = CabinService::create($request->all());
-        return response()->json(['data' => $CabinService], 201);
+        $validated = $request->validate((new CabinServiceStoreRequest)->rules());
+        $CabinService = CabinService::create($validated);
+        return response()->json(['data' => $CabinService], 200);
     }
 
     /**
@@ -53,7 +56,8 @@ class CabinServiceController extends Controller
      */
     public function update(Request $request, CabinService $CabinService)
     {
-        $CabinService->update($request->all());
+        $validated = $request->validate((new CabinServiceUpdateRequest)->rules());
+        $CabinService->update($validated);
         return response()->json(['data' => $CabinService], 200);
     }
 

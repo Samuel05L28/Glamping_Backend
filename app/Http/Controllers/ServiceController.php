@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Http\Resources\ServiceCollection;
+use App\Http\Requests\ServiceStoreRequest;
+use App\Http\Requests\ServiceUpdateRequest;
 
 class ServiceController extends Controller
 {
@@ -36,8 +38,9 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $Service = Service::create($request->all());
-        return response()->json(['data' => $Service], 201);
+        $validated = $request->validate((new ServiceStoreRequest)->rules());
+        $Service = Service::create($validated);
+        return response()->json(['data' => $Service], 200);
     }
 
     /**
@@ -53,7 +56,8 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $Service)
     {
-        $Service->update($request->all());
+        $validated = $request->validate((new ServiceUpdateRequest)->rules());
+        $Service->update($validated);
         return response()->json(['data' => $Service], 200);
     }
 

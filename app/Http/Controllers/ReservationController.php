@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Resources\ReservationCollection;
+use App\Http\Requests\ReservationStoreRequest;
+use App\Http\Requests\ReservationUpdateRequest;
 
 class ReservationController extends Controller
 {
@@ -36,8 +38,9 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        $Reservation = Reservation::create($request->all());
-        return response()->json(['data' => $Reservation], 201);
+        $validated = $request->validate((new ReservationStoreRequest)->rules());
+        $Reservation = Reservation::create($validated);
+        return response()->json(['data' => $Reservation], 200);
     }
 
     /**
@@ -53,8 +56,9 @@ class ReservationController extends Controller
      */
     public function update(Request $request, Reservation $Reservation)
     {
-        $Reservation->update($request->all());
-         return response()->json(['data' => $Reservation], 200);
+        $validated = $request->validate((new ReservationUpdateRequest)->rules());
+        $Reservation->update($validated);
+        return response()->json(['data' => $Reservation], 200);
     }
 
     /**
@@ -63,7 +67,7 @@ class ReservationController extends Controller
     public function destroy(Reservation $Reservation)
     {
         $Reservation->delete();
-         return response(null, 204);
+        return response(null, 204);
     }
 }
 
